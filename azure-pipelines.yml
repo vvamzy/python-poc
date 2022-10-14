@@ -9,21 +9,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-      python.version: '2.7'
-
 steps:
-- task: UsePythonVersion@0
+- task: SSH@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    runOptions: 'commands'
+    commands: 'echo "hello"'
+    readyTimeout: '20000'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r test-requirements.txt
-  displayName: 'Install dependencies'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
